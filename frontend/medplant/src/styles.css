@@ -1,0 +1,21 @@
+/* You can add global styles to this file, and also import other style files */
+
+@import 'tailwindcss';
+
+@theme {
+  --color-forest: #163c32;
+  --color-forest-deep: #102e27;
+  --color-leaf: #dce9cb;
+  --color-paper: #f8f8f3;
+  --color-clay: #c7674d;
+  --color-sun: #eac75c;
+  --color-moss: #547b5b;
+  --color-line: #e3e7dd;
+  --color-ink: #202720;
+
+  --font-display: Manrope, sans-serif;
+  --font-sans: 'DM Sans', sans-serif;
+  --font-serif: 'Playfair Display', serif;
+
+  --breakpoint-nav: 680px;
+}
