@@ -1,0 +1,2125 @@
+<!doctype html>
+<html lang="fr">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#163c32">
+    <meta name="description" content="MedPlant, des repères documentés pour découvrir les plantes médicinales.">
+    <title>MedPlant — Le monde végétal, mieux compris</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500;1,600&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --forest: #163c32;
+            --forest-deep: #102e27;
+            --moss: #547b5b;
+            --leaf: #dce9cb;
+            --paper: #f8f8f3;
+            --white: #fff;
+            --ink: #202720;
+            --muted: #69746b;
+            --line: #e3e7dd;
+            --clay: #c7674d;
+            --sun: #eac75c;
+            --serif: "Playfair Display", Georgia, serif;
+            --sans: "DM Sans", "Segoe UI", sans-serif;
+            --display: "Manrope", "Segoe UI", sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+            background: var(--paper);
+            color: var(--ink);
+            font-family: var(--sans);
+            font-size: 15px;
+            line-height: 1.55;
+        }
+
+        button,
+        input {
+            font: inherit;
+        }
+
+        button,
+        a {
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        button {
+            color: inherit;
+        }
+
+        .announcement {
+            min-height: 34px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 9px;
+            padding: 6px 16px;
+            color: #f5f4e8;
+            background: var(--forest-deep);
+            font-size: 11px;
+            letter-spacing: .02em;
+            text-align: center;
+        }
+
+        .announcement strong {
+            color: #e8d784;
+            font-weight: 600;
+        }
+
+        .announcement span {
+            color: #cbd8ca;
+        }
+
+        .site-header {
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            background: rgba(248, 248, 243, .96);
+            border-bottom: 1px solid var(--line);
+            backdrop-filter: blur(14px);
+        }
+
+        .nav-wrap {
+            width: min(1240px, calc(100% - 56px));
+            height: 76px;
+            margin: auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 28px;
+        }
+
+        .brand {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            flex-shrink: 0;
+        }
+
+        .brand-mark {
+            width: 37px;
+            height: 37px;
+            display: grid;
+            place-items: center;
+            border-radius: 50%;
+            background: var(--forest);
+            color: var(--leaf);
+        }
+
+        .brand-mark svg {
+            width: 22px;
+            height: 22px;
+        }
+
+        .brand-name {
+            font-family: var(--display);
+            font-size: 21px;
+            font-weight: 800;
+            letter-spacing: 0;
+            color: var(--forest);
+        }
+
+        .brand-name span {
+            color: var(--clay);
+        }
+
+        .main-nav {
+            display: flex;
+            align-items: center;
+            gap: 31px;
+            margin-left: 35px;
+        }
+
+        .main-nav a {
+            color: #48554b;
+            font-size: 13px;
+            font-weight: 600;
+            transition: color .2s;
+        }
+
+        .main-nav a:hover,
+        .main-nav a.active {
+            color: var(--forest);
+        }
+
+        .main-nav a.active {
+            position: relative;
+        }
+
+        .main-nav a.active::after {
+            position: absolute;
+            right: 0;
+            bottom: -28px;
+            left: 0;
+            height: 2px;
+            background: var(--clay);
+            content: "";
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .nav-search {
+            display: flex;
+            width: 205px;
+            height: 39px;
+            align-items: center;
+            gap: 8px;
+            padding: 0 12px;
+            border: 1px solid #dfe4da;
+            border-radius: 4px;
+            background: #fff;
+            color: var(--muted);
+        }
+
+        .nav-search svg {
+            width: 16px;
+            height: 16px;
+            flex: 0 0 auto;
+        }
+
+        .nav-search input {
+            width: 100%;
+            min-width: 0;
+            border: 0;
+            outline: 0;
+            background: transparent;
+            color: var(--ink);
+            font-size: 12px;
+        }
+
+        .nav-search input::placeholder {
+            color: #899189;
+        }
+
+        .sign-in {
+            min-height: 39px;
+            padding: 0 16px;
+            border: 1px solid var(--forest);
+            border-radius: 4px;
+            background: var(--forest);
+            color: white;
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background .2s;
+        }
+
+        .sign-in:hover {
+            background: var(--forest-deep);
+        }
+
+        .mobile-menu {
+            display: none;
+            width: 40px;
+            height: 40px;
+            place-items: center;
+            border: 1px solid var(--line);
+            border-radius: 4px;
+            background: white;
+            cursor: pointer;
+        }
+
+        .mobile-menu svg {
+            width: 19px;
+            height: 19px;
+        }
+
+        .container {
+            width: min(1160px, calc(100% - 56px));
+            margin-inline: auto;
+        }
+
+        .hero {
+            display: grid;
+            grid-template-columns: 1.03fr .97fr;
+            min-height: 470px;
+            margin-top: 34px;
+            overflow: hidden;
+            background: #e8eee2;
+        }
+
+        .hero-copy {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: center;
+            padding: 54px clamp(28px, 6vw, 84px);
+        }
+
+        .eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 9px;
+            color: var(--moss);
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: .15em;
+            text-transform: uppercase;
+        }
+
+        .eyebrow::before {
+            width: 22px;
+            height: 1px;
+            background: var(--clay);
+            content: "";
+        }
+
+        h1 {
+            max-width: 500px;
+            margin: 19px 0 16px;
+            color: var(--forest);
+            font-family: var(--serif);
+            font-size: clamp(38px, 4vw, 55px);
+            font-weight: 500;
+            letter-spacing: 0;
+            line-height: 1.12;
+        }
+
+        h1 em {
+            color: var(--clay);
+            font-weight: 500;
+        }
+
+        .hero-copy>p {
+            max-width: 410px;
+            margin: 0;
+            color: #58655b;
+            font-size: 14px;
+            line-height: 1.8;
+        }
+
+        .hero-search {
+            display: flex;
+            width: min(100%, 430px);
+            height: 51px;
+            align-items: center;
+            gap: 10px;
+            margin-top: 27px;
+            padding: 5px 5px 5px 15px;
+            border: 1px solid #d8dfd2;
+            background: rgba(255, 255, 255, .9);
+            box-shadow: 0 4px 16px rgba(29, 61, 44, .04);
+        }
+
+        .hero-search svg {
+            width: 18px;
+            height: 18px;
+            color: var(--moss);
+            flex: 0 0 auto;
+        }
+
+        .hero-search input {
+            width: 100%;
+            min-width: 0;
+            border: 0;
+            outline: 0;
+            background: transparent;
+            font-size: 12px;
+        }
+
+        .hero-search input::placeholder {
+            color: #879188;
+        }
+
+        .hero-search button {
+            height: 39px;
+            padding: 0 15px;
+            border: 0;
+            border-radius: 2px;
+            background: var(--forest);
+            color: white;
+            font-size: 11px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .hero-note {
+            margin-top: 14px;
+            color: #738074;
+            font-size: 10px;
+        }
+
+        .hero-image {
+            position: relative;
+            min-height: 470px;
+            background: #71856a;
+        }
+
+        .hero-image img {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center 49%;
+        }
+
+        .hero-image::after {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(90deg, rgba(18, 48, 37, .1), transparent 50%), linear-gradient(0deg, rgba(16, 36, 26, .24), transparent 45%);
+            content: "";
+        }
+
+        .image-caption {
+            position: absolute;
+            right: 22px;
+            bottom: 19px;
+            z-index: 1;
+            color: white;
+            font-size: 10px;
+            text-shadow: 0 1px 6px rgba(0, 0, 0, .45);
+        }
+
+        .image-caption b {
+            font-weight: 600;
+        }
+
+        .trust-strip {
+            display: flex;
+            min-height: 78px;
+            align-items: center;
+            justify-content: space-between;
+            gap: 24px;
+            border-bottom: 1px solid var(--line);
+        }
+
+        .trust-item {
+            display: flex;
+            align-items: center;
+            gap: 11px;
+            color: #526055;
+            font-size: 11px;
+        }
+
+        .trust-icon {
+            width: 33px;
+            height: 33px;
+            display: grid;
+            flex: 0 0 auto;
+            place-items: center;
+            border-radius: 50%;
+            background: #e9efe1;
+            color: var(--forest);
+        }
+
+        .trust-icon svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        .trust-item strong {
+            display: block;
+            color: var(--forest);
+            font-size: 11px;
+            font-weight: 700;
+        }
+
+        .section {
+            padding-top: 54px;
+        }
+
+        .section-heading {
+            display: flex;
+            align-items: end;
+            justify-content: space-between;
+            gap: 20px;
+            margin-bottom: 23px;
+        }
+
+        .section-heading h2 {
+            margin: 8px 0 0;
+            color: var(--forest);
+            font-family: var(--serif);
+            font-size: 32px;
+            font-weight: 500;
+            letter-spacing: 0;
+            line-height: 1.2;
+        }
+
+        .section-heading p {
+            margin: 5px 0 0;
+            color: var(--muted);
+            font-size: 12px;
+        }
+
+        .text-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            color: var(--forest);
+            font-size: 11px;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        .text-link svg {
+            width: 15px;
+            height: 15px;
+            transition: transform .2s;
+        }
+
+        .text-link:hover svg {
+            transform: translateX(3px);
+        }
+
+        .filter-row {
+            display: flex;
+            gap: 8px;
+            overflow-x: auto;
+            padding: 1px 0 15px;
+            scrollbar-width: thin;
+        }
+
+        .filter-chip {
+            min-height: 34px;
+            flex: 0 0 auto;
+            padding: 0 13px;
+            border: 1px solid #dfe4db;
+            border-radius: 2px;
+            background: transparent;
+            color: #5e6a60;
+            font-size: 11px;
+            cursor: pointer;
+            transition: all .18s;
+        }
+
+        .filter-chip:hover {
+            border-color: var(--moss);
+            color: var(--forest);
+        }
+
+        .filter-chip[aria-pressed="true"] {
+            border-color: var(--forest);
+            background: var(--forest);
+            color: white;
+        }
+
+        .plant-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 14px;
+        }
+
+        .plant-card {
+            position: relative;
+            min-height: 218px;
+            display: flex;
+            align-items: end;
+            overflow: hidden;
+            background: #6c806c;
+            color: white;
+        }
+
+        .plant-card img {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform .45s;
+        }
+
+        .plant-card:hover img {
+            transform: scale(1.045);
+        }
+
+        .plant-card::after {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(0deg, rgba(11, 34, 25, .87), rgba(11, 34, 25, .03) 76%);
+            content: "";
+        }
+
+        .plant-card-copy {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            padding: 18px;
+        }
+
+        .plant-label {
+            display: inline-block;
+            margin-bottom: 8px;
+            padding: 4px 7px;
+            background: rgba(245, 245, 224, .93);
+            color: var(--forest);
+            font-size: 9px;
+            font-weight: 700;
+            letter-spacing: .04em;
+            text-transform: uppercase;
+        }
+
+        .plant-card h3 {
+            margin: 0;
+            font-family: var(--serif);
+            font-size: 23px;
+            font-weight: 500;
+            letter-spacing: 0;
+            line-height: 1.1;
+        }
+
+        .plant-card p {
+            margin: 6px 0 0;
+            color: rgba(255, 255, 255, .8);
+            font-size: 10px;
+            font-style: italic;
+        }
+
+        .plant-card .card-arrow {
+            position: absolute;
+            right: 16px;
+            bottom: 20px;
+            z-index: 2;
+            width: 30px;
+            height: 30px;
+            display: grid;
+            place-items: center;
+            border: 1px solid rgba(255, 255, 255, .5);
+            border-radius: 50%;
+            color: white;
+        }
+
+        .card-arrow svg {
+            width: 14px;
+            height: 14px;
+        }
+
+        .articles-section {
+            padding-bottom: 58px;
+        }
+
+        .article-detail {
+            padding: 30px 0 64px;
+        }
+
+        .detail-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            margin-bottom: 25px;
+        }
+
+        .back-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 0;
+            border: 0;
+            background: transparent;
+            color: var(--forest);
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .back-button svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        .detail-breadcrumb {
+            overflow: hidden;
+            color: var(--muted);
+            font-size: 10px;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .detail-layout {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) 265px;
+            gap: 38px;
+            align-items: start;
+        }
+
+        .detail-cover {
+            width: 100%;
+            aspect-ratio: 1.9;
+            object-fit: cover;
+            background: #dbe2d5;
+        }
+
+        .detail-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 9px;
+            margin-top: 23px;
+            color: #778078;
+            font-size: 10px;
+        }
+
+        .detail-meta span+span::before {
+            margin-right: 9px;
+            color: #aab1a8;
+            content: "·";
+        }
+
+        .detail-title {
+            max-width: 780px;
+            margin: 12px 0 14px;
+            color: var(--forest);
+            font-family: var(--serif);
+            font-size: clamp(34px, 4vw, 48px);
+            font-weight: 500;
+            letter-spacing: 0;
+            line-height: 1.16;
+        }
+
+        .detail-intro {
+            max-width: 760px;
+            margin: 0;
+            color: #59665b;
+            font-family: var(--serif);
+            font-size: 19px;
+            line-height: 1.65;
+        }
+
+        .detail-content {
+            max-width: 720px;
+            margin-top: 33px;
+        }
+
+        .detail-content section {
+            padding: 22px 0;
+            border-top: 1px solid var(--line);
+            scroll-margin-top: 105px;
+        }
+
+        .detail-content h2 {
+            margin: 0 0 10px;
+            color: var(--forest);
+            font-family: var(--serif);
+            font-size: 27px;
+            font-weight: 500;
+            letter-spacing: 0;
+        }
+
+        .detail-content p {
+            margin: 0;
+            color: #515e54;
+            font-size: 13px;
+            line-height: 1.9;
+        }
+
+        .detail-sidebar {
+            position: sticky;
+            top: 100px;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .detail-panel {
+            padding: 19px;
+            border: 1px solid var(--line);
+            background: #fff;
+        }
+
+        .detail-panel h2 {
+            margin: 0;
+            color: var(--forest);
+            font-family: var(--serif);
+            font-size: 21px;
+            font-weight: 500;
+            letter-spacing: 0;
+        }
+
+        .detail-toc {
+            display: flex;
+            flex-direction: column;
+            gap: 11px;
+            margin: 15px 0 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        .detail-toc a {
+            color: #5d695f;
+            font-size: 11px;
+        }
+
+        .detail-toc a:hover {
+            color: var(--clay);
+        }
+
+        .detail-evidence {
+            margin-top: 12px;
+            padding: 12px;
+            background: #edf1e7;
+            color: #526055;
+            font-size: 10px;
+            line-height: 1.7;
+        }
+
+        .detail-source-note {
+            margin: 10px 0 0;
+            color: #69746c;
+            font-size: 10px;
+            line-height: 1.7;
+        }
+
+        .detail-disclaimer {
+            border: 0;
+            background: #edf1e7;
+        }
+
+        .detail-disclaimer p {
+            margin: 8px 0 0;
+            color: #59665b;
+            font-size: 10px;
+            line-height: 1.75;
+        }
+
+        .article-layout {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) 282px;
+            gap: 35px;
+            align-items: start;
+        }
+
+        .article-list {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 22px 17px;
+        }
+
+        .article-card {
+            min-width: 0;
+            border-bottom: 1px solid var(--line);
+            padding-bottom: 17px;
+            animation: appear .34s ease both;
+        }
+
+        .article-image {
+            position: relative;
+            aspect-ratio: 1.64;
+            overflow: hidden;
+            background: #dbe2d5;
+        }
+
+        .article-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform .4s;
+        }
+
+        .article-card:hover .article-image img {
+            transform: scale(1.035);
+        }
+
+        .article-tag {
+            position: absolute;
+            left: 11px;
+            bottom: 11px;
+            padding: 5px 8px;
+            background: #f8f8f3;
+            color: var(--forest);
+            font-size: 9px;
+            font-weight: 700;
+        }
+
+        .article-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 13px;
+            color: #778078;
+            font-size: 9px;
+        }
+
+        .article-meta span+span::before {
+            margin-right: 8px;
+            color: #aab1a8;
+            content: "·";
+        }
+
+        .article-card h3 {
+            margin: 8px 0 6px;
+            color: var(--forest);
+            font-family: var(--serif);
+            font-size: 22px;
+            font-weight: 500;
+            letter-spacing: 0;
+            line-height: 1.25;
+        }
+
+        .article-card>p {
+            margin: 0;
+            color: #69746c;
+            font-size: 11px;
+            line-height: 1.7;
+        }
+
+        .read-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            margin-top: 11px;
+            color: var(--forest);
+            font-size: 10px;
+            font-weight: 700;
+        }
+
+        .read-link svg {
+            width: 13px;
+            height: 13px;
+        }
+
+        .evidence {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            margin-top: 10px;
+            color: #637466;
+            font-size: 9px;
+        }
+
+        .evidence-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #d7ac42;
+        }
+
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .sidebar-panel {
+            padding: 20px;
+            border: 1px solid var(--line);
+            background: #fff;
+        }
+
+        .sidebar-panel h3 {
+            margin: 0;
+            color: var(--forest);
+            font-family: var(--serif);
+            font-size: 22px;
+            font-weight: 500;
+            letter-spacing: 0;
+        }
+
+        .sidebar-panel>p {
+            margin: 7px 0 0;
+            color: #6b756d;
+            font-size: 11px;
+            line-height: 1.7;
+        }
+
+        .popular-list {
+            margin-top: 13px;
+        }
+
+        .popular-link {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 0;
+            border-top: 1px solid #edf0e9;
+        }
+
+        .popular-number {
+            color: #b8c2b4;
+            font-family: var(--serif);
+            font-size: 21px;
+        }
+
+        .popular-link span:last-child {
+            color: #35473a;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .disclaimer-panel {
+            border: 0;
+            background: #edf1e7;
+        }
+
+        .disclaimer-title {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            color: var(--forest);
+            font-size: 11px;
+            font-weight: 700;
+        }
+
+        .disclaimer-title svg {
+            width: 17px;
+            height: 17px;
+            flex: 0 0 auto;
+            color: var(--clay);
+        }
+
+        .disclaimer-panel p {
+            margin: 9px 0 0;
+            color: #59665b;
+            font-size: 10px;
+            line-height: 1.75;
+        }
+
+        .no-results {
+            grid-column: 1/-1;
+            padding: 34px 20px;
+            border: 1px dashed #cfd8ca;
+            color: #627064;
+            text-align: center;
+            font-size: 13px;
+        }
+
+        .newsletter {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 24px;
+            padding: 29px 34px;
+            background: var(--forest);
+            color: white;
+        }
+
+        .newsletter-copy {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .newsletter-icon {
+            width: 44px;
+            height: 44px;
+            display: grid;
+            flex: 0 0 auto;
+            place-items: center;
+            border: 1px solid rgba(255, 255, 255, .26);
+            border-radius: 50%;
+            color: #e3d37b;
+        }
+
+        .newsletter-icon svg {
+            width: 21px;
+            height: 21px;
+        }
+
+        .newsletter h2 {
+            margin: 0;
+            font-family: var(--serif);
+            font-size: 23px;
+            font-weight: 500;
+            letter-spacing: 0;
+        }
+
+        .newsletter p {
+            margin: 3px 0 0;
+            color: #c5d1c8;
+            font-size: 10px;
+        }
+
+        .newsletter-form {
+            display: flex;
+            width: min(100%, 360px);
+            height: 42px;
+        }
+
+        .newsletter-form input {
+            width: 100%;
+            min-width: 0;
+            border: 0;
+            border-radius: 0;
+            padding: 0 12px;
+            outline: 0;
+            background: white;
+            color: var(--ink);
+            font-size: 11px;
+        }
+
+        .newsletter-form button {
+            flex: 0 0 auto;
+            padding: 0 14px;
+            border: 0;
+            background: var(--sun);
+            color: #26352a;
+            font-size: 10px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .site-footer {
+            margin-top: 57px;
+            padding: 27px 0 24px;
+            border-top: 1px solid var(--line);
+        }
+
+        .footer-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .footer-copy {
+            color: #788178;
+            font-size: 10px;
+        }
+
+        .footer-nav {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            color: #536056;
+            font-size: 10px;
+        }
+
+        .footer-note {
+            margin-top: 18px;
+            color: #909890;
+            font-size: 9px;
+        }
+
+        .toast {
+            position: fixed;
+            right: 22px;
+            bottom: 22px;
+            z-index: 30;
+            max-width: min(380px, calc(100% - 44px));
+            padding: 13px 17px;
+            transform: translateY(20px);
+            opacity: 0;
+            border-left: 3px solid var(--sun);
+            background: var(--forest-deep);
+            color: white;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, .18);
+            font-size: 12px;
+            pointer-events: none;
+            transition: .25s;
+        }
+
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        @keyframes appear {
+            from {
+                opacity: 0;
+                transform: translateY(8px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 920px) {
+            .nav-wrap {
+                width: min(100% - 36px, 740px);
+                gap: 14px;
+            }
+
+            .main-nav {
+                gap: 18px;
+                margin-left: 8px;
+            }
+
+            .nav-search {
+                width: 165px;
+            }
+
+            .container {
+                width: min(100% - 36px, 740px);
+            }
+
+            .hero {
+                min-height: 420px;
+            }
+
+            .hero-image {
+                min-height: 420px;
+            }
+
+            .hero-copy {
+                padding: 36px;
+            }
+
+            .trust-strip {
+                flex-wrap: wrap;
+                justify-content: flex-start;
+                padding: 16px 0;
+                gap: 14px 26px;
+            }
+
+            .trust-item {
+                width: calc(50% - 15px);
+            }
+
+            .plant-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .article-layout {
+                grid-template-columns: minmax(0, 1fr) 230px;
+                gap: 22px;
+            }
+
+            .detail-layout {
+                grid-template-columns: minmax(0, 1fr) 220px;
+                gap: 24px;
+            }
+
+            .article-card h3 {
+                font-size: 20px;
+            }
+        }
+
+        @media (max-width: 680px) {
+            .announcement {
+                font-size: 9px;
+            }
+
+            .nav-wrap {
+                height: 64px;
+                width: calc(100% - 32px);
+            }
+
+            .brand-name {
+                font-size: 19px;
+            }
+
+            .brand-mark {
+                width: 34px;
+                height: 34px;
+            }
+
+            .main-nav {
+                position: absolute;
+                top: 64px;
+                right: 0;
+                left: 0;
+                display: none;
+                flex-direction: column;
+                align-items: stretch;
+                gap: 0;
+                margin: 0;
+                padding: 7px 16px 14px;
+                border-bottom: 1px solid var(--line);
+                background: var(--paper);
+            }
+
+            .main-nav.open {
+                display: flex;
+            }
+
+            .main-nav a {
+                padding: 12px 4px;
+                border-bottom: 1px solid var(--line);
+            }
+
+            .main-nav a.active::after {
+                display: none;
+            }
+
+            .nav-search {
+                width: 40px;
+                height: 40px;
+                justify-content: center;
+                padding: 0;
+                border: 0;
+                background: transparent;
+            }
+
+            .nav-search input {
+                position: absolute;
+                top: 64px;
+                right: 16px;
+                left: 16px;
+                display: none;
+                width: calc(100% - 32px);
+                height: 42px;
+                padding: 0 12px;
+                border: 1px solid var(--line);
+                background: white;
+            }
+
+            .nav-search.open input {
+                display: block;
+            }
+
+            .nav-search svg {
+                width: 19px;
+                height: 19px;
+            }
+
+            .sign-in {
+                min-height: 37px;
+                padding: 0 11px;
+                font-size: 10px;
+            }
+
+            .mobile-menu {
+                display: grid;
+            }
+
+            .container {
+                width: calc(100% - 32px);
+            }
+
+            .hero {
+                grid-template-columns: 1fr;
+                margin-top: 17px;
+            }
+
+            .hero-copy {
+                padding: 36px 25px 30px;
+            }
+
+            h1 {
+                max-width: 420px;
+                margin-top: 14px;
+                font-size: 39px;
+            }
+
+            .hero-copy>p {
+                font-size: 13px;
+            }
+
+            .hero-image {
+                min-height: 250px;
+            }
+
+            .trust-strip {
+                gap: 13px 9px;
+            }
+
+            .trust-item {
+                width: calc(50% - 5px);
+                gap: 8px;
+                font-size: 9px;
+            }
+
+            .trust-icon {
+                width: 29px;
+                height: 29px;
+            }
+
+            .trust-item strong {
+                font-size: 10px;
+            }
+
+            .section {
+                padding-top: 39px;
+            }
+
+            .section-heading {
+                align-items: start;
+            }
+
+            .section-heading h2 {
+                font-size: 28px;
+            }
+
+            .section-heading p {
+                max-width: 280px;
+            }
+
+            .section-heading>.text-link {
+                margin-top: 15px;
+                font-size: 10px;
+            }
+
+            .plant-grid {
+                gap: 9px;
+            }
+
+            .plant-card {
+                min-height: 185px;
+            }
+
+            .plant-card-copy {
+                padding: 13px;
+            }
+
+            .plant-card h3 {
+                font-size: 20px;
+            }
+
+            .plant-card .card-arrow {
+                right: 10px;
+                bottom: 14px;
+                width: 26px;
+                height: 26px;
+            }
+
+            .article-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .detail-layout {
+                grid-template-columns: 1fr;
+                gap: 24px;
+            }
+
+            .detail-top {
+                align-items: flex-start;
+                flex-direction: column;
+                gap: 5px;
+                margin-bottom: 16px;
+            }
+
+            .detail-title {
+                font-size: 35px;
+            }
+
+            .detail-intro {
+                font-size: 17px;
+            }
+
+            .detail-cover {
+                aspect-ratio: 1.4;
+            }
+
+            .detail-sidebar {
+                position: static;
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .article-list {
+                gap: 18px 12px;
+            }
+
+            .article-card h3 {
+                font-size: 19px;
+            }
+
+            .article-card>p {
+                font-size: 10px;
+            }
+
+            .article-image {
+                aspect-ratio: 1.32;
+            }
+
+            .sidebar {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .sidebar-panel {
+                padding: 16px;
+            }
+
+            .sidebar-panel h3 {
+                font-size: 19px;
+            }
+
+            .newsletter {
+                align-items: stretch;
+                flex-direction: column;
+                gap: 17px;
+                padding: 23px 20px;
+            }
+
+            .newsletter h2 {
+                font-size: 21px;
+            }
+
+            .newsletter-form {
+                width: 100%;
+            }
+
+            .site-footer {
+                margin-top: 39px;
+            }
+
+            .footer-inner {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+            .footer-nav {
+                gap: 15px;
+            }
+        }
+
+        @media (max-width: 390px) {
+            .nav-actions {
+                gap: 5px;
+            }
+
+            .brand {
+                gap: 7px;
+            }
+
+            .brand-name {
+                font-size: 17px;
+            }
+
+            .hero-search {
+                gap: 7px;
+                padding-left: 10px;
+            }
+
+            .hero-search button {
+                padding: 0 9px;
+            }
+
+            .plant-card {
+                min-height: 165px;
+            }
+
+            .plant-label {
+                font-size: 8px;
+            }
+
+            .plant-card h3 {
+                font-size: 18px;
+            }
+
+            .plant-card p {
+                font-size: 9px;
+            }
+
+            .article-list {
+                grid-template-columns: 1fr;
+            }
+
+            .article-image {
+                aspect-ratio: 1.75;
+            }
+
+            .article-card h3 {
+                font-size: 22px;
+            }
+
+            .sidebar {
+                grid-template-columns: 1fr;
+            }
+
+            .detail-sidebar {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+
+            *,
+            *::before,
+            *::after {
+                scroll-behavior: auto !important;
+                animation-duration: .01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: .01ms !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="announcement"><strong>La botanique, avec discernement.</strong><span>Des contenus documentés pour mieux
+            connaître les plantes.</span></div>
+    <header class="site-header">
+        <div class="nav-wrap">
+            <a class="brand" href="#accueil" aria-label="MedPlant, accueil">
+                <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none">
+                        <path d="M19.5 4.5c-7.2.2-12.3 2.4-13.8 7.1-1 3.1.8 5.8 3.6 5.8 5.3 0 8.6-5.3 10.2-12.9Z"
+                            stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" />
+                        <path d="M4 21c2.2-5.5 5.2-8.6 10.8-11.4" stroke="currentColor" stroke-width="1.6"
+                            stroke-linecap="round" />
+                    </svg></span>
+                <span class="brand-name">med<span>plant</span></span>
+            </a>
+            <nav class="main-nav" id="mainNav" aria-label="Navigation principale">
+                <a class="active" href="#accueil">Accueil</a>
+                <a href="#plantes">Les plantes</a>
+                <a href="#articles">Articles</a>
+                <a href="#repères">Nos repères</a>
+            </nav>
+            <div class="nav-actions">
+                <label class="nav-search" id="navSearch" aria-label="Rechercher un article ou une plante">
+                    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                        <circle cx="10.8" cy="10.8" r="6.8" stroke="currentColor" stroke-width="1.7" />
+                        <path d="m16 16 4.5 4.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" />
+                    </svg>
+                    <input id="navSearchInput" type="search" placeholder="Rechercher…" autocomplete="off">
+                </label>
+                <button class="sign-in" type="button"
+                    data-toast="La création de compte sera disponible dans la prochaine version.">Mon espace</button>
+                <button class="mobile-menu" id="menuToggle" type="button" aria-label="Ouvrir le menu"
+                    aria-expanded="false"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                        <path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="1.7"
+                            stroke-linecap="round" />
+                    </svg></button>
+            </div>
+        </div>
+    </header>
+    <main id="accueil" class="container">
+        <div id="homeView">
+            <section class="hero" aria-labelledby="hero-title">
+                <div class="hero-copy">
+                    <span class="eyebrow">Le journal des plantes utiles</span>
+                    <h1 id="hero-title">Le monde végétal,<br><em>mieux compris.</em></h1>
+                    <p>Explorez les plantes médicinales avec curiosité et esprit critique. Des fiches claires, des
+                        articles
+                        sourcés et des repères pour aller plus loin.</p>
+                    <form class="hero-search" id="heroSearchForm" role="search">
+                        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                            <circle cx="10.8" cy="10.8" r="6.8" stroke="currentColor" stroke-width="1.7" />
+                            <path d="m16 16 4.5 4.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" />
+                        </svg>
+                        <input id="heroSearchInput" type="search" placeholder="Une plante, un sujet, une question…"
+                            autocomplete="off" aria-label="Rechercher dans MedPlant">
+                        <button type="submit">Rechercher</button>
+                    </form>
+                    <span class="hero-note">Pour commencer : camomille, sommeil, infusion…</span>
+                </div>
+                <div class="hero-image">
+                    <img src="https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?auto=format&fit=crop&w=1200&q=85"
+                        alt="Lumière matinale sur un champ de plantes sauvages">
+                    <span class="image-caption"><b>Observer, comprendre, transmettre.</b></span>
+                </div>
+            </section>
+            <section class="trust-strip" id="repères" aria-label="Nos principes éditoriaux">
+                <div class="trust-item"><span class="trust-icon"><svg viewBox="0 0 24 24" fill="none"
+                            aria-hidden="true">
+                            <path d="m5 12 4.2 4.2L19 6.5" stroke="currentColor" stroke-width="1.8"
+                                stroke-linecap="round" stroke-linejoin="round" />
+                            <path d="M12 22s8-4 8-11V5l-8-3-8 3v6c0 7 8 11 8 11Z" stroke="currentColor"
+                                stroke-width="1.5" stroke-linejoin="round" />
+                        </svg></span><span><strong>Sources identifiées</strong>Nos références sont indiquées</span>
+                </div>
+                <div class="trust-item"><span class="trust-icon"><svg viewBox="0 0 24 24" fill="none"
+                            aria-hidden="true">
+                            <path d="M12 3v18M3 12h18" stroke="currentColor" stroke-width="1.7"
+                                stroke-linecap="round" />
+                            <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.5" />
+                        </svg></span><span><strong>Niveau de preuve précisé</strong>Tradition et recherche
+                        distinguées</span></div>
+                <div class="trust-item"><span class="trust-icon"><svg viewBox="0 0 24 24" fill="none"
+                            aria-hidden="true">
+                            <path d="M12 22s8-4 8-11V5l-8-3-8 3v6c0 7 8 11 8 11Z" stroke="currentColor"
+                                stroke-width="1.5" />
+                            <path d="M12 8v5m0 3h.01" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" />
+                        </svg></span><span><strong>Précautions visibles</strong>Les limites ne sont pas cachées</span>
+                </div>
+                <div class="trust-item"><span class="trust-icon"><svg viewBox="0 0 24 24" fill="none"
+                            aria-hidden="true">
+                            <path d="M12 3v18M4.2 7.5l15.6 9M4.2 16.5l15.6-9" stroke="currentColor" stroke-width="1.5"
+                                stroke-linecap="round" />
+                            <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.5" />
+                        </svg></span><span><strong>Curiosité responsable</strong>Informer, sans se substituer au
+                        soin</span>
+                </div>
+            </section>
+            <section class="section" id="plantes" aria-labelledby="plants-heading">
+                <div class="section-heading">
+                    <div><span class="eyebrow">Le répertoire</span>
+                        <h2 id="plants-heading">À la rencontre des plantes</h2>
+                        <p>Des fiches pour découvrir leurs usages, leurs limites et leurs précautions.</p>
+                    </div>
+                    <a class="text-link" href="#articles">Toutes les plantes <svg viewBox="0 0 24 24" fill="none"
+                            aria-hidden="true">
+                            <path d="M5 12h14m-6-6 6 6-6 6" stroke="currentColor" stroke-width="1.7"
+                                stroke-linecap="round" stroke-linejoin="round" />
+                        </svg></a>
+                </div>
+                <div class="plant-grid">
+                    <a class="plant-card" href="#articles"
+                        data-toast="La fiche détaillée de la camomille sera bientôt disponible."><img
+                            src="https://images.unsplash.com/photo-1530968464165-7a1861cbaf9f?auto=format&fit=crop&w=600&q=80"
+                            alt="Fleurs de camomille" loading="lazy">
+                        <div class="plant-card-copy"><span class="plant-label">Fleur · Europe</span>
+                            <h3>Camomille</h3>
+                            <p>Matricaria chamomilla</p>
+                        </div><span class="card-arrow"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                                <path d="M5 12h14m-6-6 6 6-6 6" stroke="currentColor" stroke-width="1.7"
+                                    stroke-linecap="round" stroke-linejoin="round" />
+                            </svg></span>
+                    </a>
+                    <a class="plant-card" href="#articles"
+                        data-toast="La fiche détaillée de la menthe poivrée sera bientôt disponible."><img
+                            src="https://images.unsplash.com/photo-1628556270448-4d4e4148e1b1?auto=format&fit=crop&w=600&q=80"
+                            alt="Feuilles fraîches de menthe" loading="lazy">
+                        <div class="plant-card-copy"><span class="plant-label">Feuille · Cultivée</span>
+                            <h3>Menthe poivrée</h3>
+                            <p>Mentha × piperita</p>
+                        </div><span class="card-arrow"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                                <path d="M5 12h14m-6-6 6 6-6 6" stroke="currentColor" stroke-width="1.7"
+                                    stroke-linecap="round" stroke-linejoin="round" />
+                            </svg></span>
+                    </a>
+                    <a class="plant-card" href="#articles"
+                        data-toast="La fiche détaillée de la mélisse sera bientôt disponible."><img
+                            src="https://images.unsplash.com/photo-1600326145359-3a44909d1a39?auto=format&fit=crop&w=600&q=80"
+                            alt="Herbes aromatiques fraîches" loading="lazy">
+                        <div class="plant-card-copy"><span class="plant-label">Feuille · Europe</span>
+                            <h3>Mélisse</h3>
+                            <p>Melissa officinalis</p>
+                        </div><span class="card-arrow"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                                <path d="M5 12h14m-6-6 6 6-6 6" stroke="currentColor" stroke-width="1.7"
+                                    stroke-linecap="round" stroke-linejoin="round" />
+                            </svg></span>
+                    </a>
+                    <a class="plant-card" href="#articles"
+                        data-toast="La fiche détaillée du calendula sera bientôt disponible."><img
+                            src="https://images.unsplash.com/photo-1531058020387-3be344556be6?auto=format&fit=crop&w=600&q=80"
+                            alt="Fleurs orangées de calendula" loading="lazy">
+                        <div class="plant-card-copy"><span class="plant-label">Fleur · Méditerranée</span>
+                            <h3>Calendula</h3>
+                            <p>Calendula officinalis</p>
+                        </div><span class="card-arrow"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                                <path d="M5 12h14m-6-6 6 6-6 6" stroke="currentColor" stroke-width="1.7"
+                                    stroke-linecap="round" stroke-linejoin="round" />
+                            </svg></span>
+                    </a>
+                </div>
+            </section>
+            <section class="section articles-section" id="articles" aria-labelledby="articles-heading">
+                <div class="section-heading">
+                    <div><span class="eyebrow">À lire en ce moment</span>
+                        <h2 id="articles-heading">Le carnet de saison</h2>
+                        <p>Articles, usages traditionnels et éclairages fondés sur les sources.</p>
+                    </div>
+                    <a class="text-link" href="#articles">Tous les articles <svg viewBox="0 0 24 24" fill="none"
+                            aria-hidden="true">
+                            <path d="M5 12h14m-6-6 6 6-6 6" stroke="currentColor" stroke-width="1.7"
+                                stroke-linecap="round" stroke-linejoin="round" />
+                        </svg></a>
+                </div>
+                <div class="filter-row" role="group" aria-label="Filtrer les articles par thème">
+                    <button class="filter-chip" type="button" data-filter="all" aria-pressed="true">Tout
+                        explorer</button>
+                    <button class="filter-chip" type="button" data-filter="plantes"
+                        aria-pressed="false">Plantes</button>
+                    <button class="filter-chip" type="button" data-filter="usages" aria-pressed="false">Usages
+                        traditionnels</button>
+                    <button class="filter-chip" type="button" data-filter="science" aria-pressed="false">Décryptage
+                        scientifique</button>
+                    <button class="filter-chip" type="button" data-filter="precautions"
+                        aria-pressed="false">Précautions</button>
+                </div>
+                <div class="article-layout">
+                    <div class="article-list" id="articleList" aria-live="polite">
+                        <article class="article-card" data-category="plantes"
+                            data-search="camomille matricaire plante infusion identification">
+                            <a href="#article/camomille" data-article-id="camomille">
+                                <div class="article-image"><img
+                                        src="https://images.unsplash.com/photo-1563241527-3004b7be0ffd?auto=format&fit=crop&w=900&q=80"
+                                        alt="Fleurs blanches de camomille sur tige" loading="lazy"><span
+                                        class="article-tag">Fiche plante</span></div>
+                                <div class="article-meta"><span>Fiche botanique</span><span>6 min de lecture</span>
+                                </div>
+                                <h3>La camomille matricaire : apprendre à la reconnaître</h3>
+                                <p>Portrait botanique, usages traditionnels et points de vigilance autour de cette fleur
+                                    familière.</p><span class="evidence"><i class="evidence-dot"></i> Usages
+                                    traditionnels
+                                    documentés</span><span class="read-link">Découvrir l'article <svg
+                                        viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                                        <path d="M5 12h14m-6-6 6 6-6 6" stroke="currentColor" stroke-width="1.7"
+                                            stroke-linecap="round" stroke-linejoin="round" />
+                                    </svg></span>
+                            </a>
+                        </article>
+                        <article class="article-card" data-category="science"
+                            data-search="plantes preuves scientifiques études comprendre niveau preuve recherche">
+                            <a href="#article/science" data-article-id="science">
+                                <div class="article-image"><img
+                                        src="https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?auto=format&fit=crop&w=900&q=80"
+                                        alt="Feuilles vertes baignées de lumière" loading="lazy"><span
+                                        class="article-tag">Décryptage</span></div>
+                                <div class="article-meta"><span>Comprendre</span><span>8 min de lecture</span></div>
+                                <h3>Plantes et science : lire le niveau de preuve</h3>
+                                <p>Études préliminaires, essais cliniques, usages établis : quelques clés pour s'y
+                                    retrouver.</p><span class="evidence"><i class="evidence-dot"></i> Repères
+                                    méthodologiques</span><span class="read-link">Découvrir l'article <svg
+                                        viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                                        <path d="M5 12h14m-6-6 6 6-6 6" stroke="currentColor" stroke-width="1.7"
+                                            stroke-linecap="round" stroke-linejoin="round" />
+                                    </svg></span>
+                            </a>
+                        </article>
+                        <article class="article-card" data-category="usages"
+                            data-search="infusion préparation tisane plantes tradition mode emploi">
+                            <a href="#article/infusion" data-article-id="infusion">
+                                <div class="article-image"><img
+                                        src="https://images.unsplash.com/photo-1544787219-7f47ccb76574?auto=format&fit=crop&w=900&q=80"
+                                        alt="Tasse de tisane chaude sur une table" loading="lazy"><span
+                                        class="article-tag">Gestes & savoirs</span></div>
+                                <div class="article-meta"><span>Usage traditionnel</span><span>5 min de lecture</span>
+                                </div>
+                                <h3>Infusion, décoction : quelle différence ?</h3>
+                                <p>Deux façons de préparer les plantes, expliquées simplement et sans recette
+                                    universelle.
+                                </p><span class="evidence"><i class="evidence-dot"></i> Pratiques
+                                    traditionnelles</span><span class="read-link">Découvrir l'article <svg
+                                        viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                                        <path d="M5 12h14m-6-6 6 6-6 6" stroke="currentColor" stroke-width="1.7"
+                                            stroke-linecap="round" stroke-linejoin="round" />
+                                    </svg></span>
+                            </a>
+                        </article>
+                        <article class="article-card" data-category="precautions"
+                            data-search="précautions interactions médicaments grossesse plantes médicinales sécurité">
+                            <a href="#article/precautions" data-article-id="precautions">
+                                <div class="article-image"><img
+                                        src="https://images.unsplash.com/photo-1512290923902-8a9f81dc236c?auto=format&fit=crop&w=900&q=80"
+                                        alt="Plantes séchées préparées avec soin" loading="lazy"><span
+                                        class="article-tag">À
+                                        savoir</span></div>
+                                <div class="article-meta"><span>Précautions</span><span>7 min de lecture</span></div>
+                                <h3>Plantes médicinales : les précautions à connaître</h3>
+                                <p>Interactions, situations particulières et bonnes questions à poser à un professionnel
+                                    de
+                                    santé.</p><span class="evidence"><i class="evidence-dot"></i> Sécurité &
+                                    vigilance</span><span class="read-link">Découvrir l'article <svg viewBox="0 0 24 24"
+                                        fill="none" aria-hidden="true">
+                                        <path d="M5 12h14m-6-6 6 6-6 6" stroke="currentColor" stroke-width="1.7"
+                                            stroke-linecap="round" stroke-linejoin="round" />
+                                    </svg></span>
+                            </a>
+                        </article>
+                    </div>
+                    <aside class="sidebar" aria-label="Informations complémentaires">
+                        <section class="sidebar-panel">
+                            <span class="eyebrow">Pour démarrer</span>
+                            <h3>Les plus consultés</h3>
+                            <div class="popular-list"><a class="popular-link" href="#plantes"
+                                    data-toast="La fiche plante sera bientôt disponible."><span
+                                        class="popular-number">01</span><span>Camomille matricaire</span></a><a
+                                    class="popular-link" href="#plantes"
+                                    data-toast="La fiche plante sera bientôt disponible."><span
+                                        class="popular-number">02</span><span>Menthe poivrée</span></a><a
+                                    class="popular-link" href="#articles" data-article-id="infusion"><span
+                                        class="popular-number">03</span><span>Comprendre les infusions</span></a></div>
+                        </section>
+                        <section class="sidebar-panel disclaimer-panel">
+                            <div class="disclaimer-title"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                                    <path d="M12 3 2.8 20h18.4L12 3Z" stroke="currentColor" stroke-width="1.6"
+                                        stroke-linejoin="round" />
+                                    <path d="M12 9v5m0 2.5h.01" stroke="currentColor" stroke-width="1.8"
+                                        stroke-linecap="round" />
+                                </svg>Une information importante</div>
+                            <p>Les plantes peuvent présenter des risques ou interagir avec des médicaments. Ces contenus
+                                sont informatifs et ne remplacent pas un avis médical. En cas de doute, demandez conseil
+                                à
+                                un professionnel de santé.</p>
+                        </section>
+                    </aside>
+                </div>
+            </section>
+            <section class="newsletter" aria-labelledby="newsletter-heading">
+                <div class="newsletter-copy"><span class="newsletter-icon"><svg viewBox="0 0 24 24" fill="none"
+                            aria-hidden="true">
+                            <path d="M4 6.5h16v12H4z" stroke="currentColor" stroke-width="1.5" />
+                            <path d="m4.5 7 7.5 6 7.5-6" stroke="currentColor" stroke-width="1.5"
+                                stroke-linejoin="round" />
+                        </svg></span>
+                    <div>
+                        <h2 id="newsletter-heading">Une feuille fraîche, de temps en temps.</h2>
+                        <p>Les nouveaux articles et découvertes, directement dans votre boîte mail.</p>
+                    </div>
+                </div>
+                <form class="newsletter-form" id="newsletterForm"><input type="email" required
+                        placeholder="Votre adresse e-mail" aria-label="Votre adresse e-mail"><button
+                        type="submit">S'inscrire</button></form>
+            </section>
+        </div>
+        <section class="article-detail" id="articleDetail" hidden aria-labelledby="detailTitle">
+            <div class="detail-top">
+                <button class="back-button" id="backToArticles" type="button"><svg viewBox="0 0 24 24" fill="none"
+                        aria-hidden="true">
+                        <path d="M19 12H5m6 6-6-6 6-6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                    </svg>Retour aux articles</button>
+                <nav class="detail-breadcrumb" aria-label="Fil d'Ariane"><a href="#accueil"
+                        id="homeBreadcrumb">Accueil</a>
+                    / <a href="#articles" id="articlesBreadcrumb">Articles</a> / <span
+                        id="articleBreadcrumbTitle"></span></nav>
+            </div>
+            <div class="detail-layout">
+                <article class="detail-main">
+                    <img class="detail-cover" id="detailImage" src="" alt="">
+                    <div class="detail-meta"><span id="detailCategory"></span><span id="detailReadingTime"></span></div>
+                    <h1 class="detail-title" id="detailTitle"></h1>
+                    <p class="detail-intro" id="detailIntro"></p>
+                    <div class="detail-content" id="detailContent"></div>
+                </article>
+                <aside class="detail-sidebar" aria-label="Repères de lecture">
+                    <section class="detail-panel">
+                        <span class="eyebrow">Dans cet article</span>
+                        <h2>Sommaire</h2>
+                        <ul class="detail-toc">
+                            <li><a href="#detail-section-1">L'essentiel</a></li>
+                            <li><a href="#detail-section-2">Ce qu'il faut comprendre</a></li>
+                            <li><a href="#detail-section-3">Précautions et limites</a></li>
+                        </ul>
+                    </section>
+                    <section class="detail-panel">
+                        <span class="eyebrow">Repères</span>
+                        <h2>Niveau de preuve</h2>
+                        <div class="detail-evidence" id="detailEvidence"></div>
+                        <p class="detail-source-note">Les références bibliographiques de cette maquette sont à compléter
+                            et vérifier avant toute publication.</p>
+                    </section>
+                    <section class="detail-panel detail-disclaimer">
+                        <div class="disclaimer-title"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                                <path d="M12 3 2.8 20h18.4L12 3Z" stroke="currentColor" stroke-width="1.6"
+                                    stroke-linejoin="round" />
+                                <path d="M12 9v5m0 2.5h.01" stroke="currentColor" stroke-width="1.8"
+                                    stroke-linecap="round" />
+                            </svg>À garder en tête</div>
+                        <p>Ces informations sont générales et ne remplacent pas un avis médical. Les plantes peuvent
+                            présenter des risques ou interagir avec des médicaments.</p>
+                    </section>
+                </aside>
+            </div>
+        </section>
+    </main>
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-inner"><a class="brand" href="#accueil"><span class="brand-mark" aria-hidden="true"><svg
+                            viewBox="0 0 24 24" fill="none">
+                            <path d="M19.5 4.5c-7.2.2-12.3 2.4-13.8 7.1-1 3.1.8 5.8 3.6 5.8 5.3 0 8.6-5.3 10.2-12.9Z"
+                                stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" />
+                            <path d="M4 21c2.2-5.5 5.2-8.6 10.8-11.4" stroke="currentColor" stroke-width="1.6"
+                                stroke-linecap="round" />
+                        </svg></span><span class="brand-name">med<span>plant</span></span></a><span
+                    class="footer-copy">© 2026 MedPlant · Le vivant mérite des sources.</span>
+                <nav class="footer-nav" aria-label="Liens de pied de page"><a href="#repères">Notre démarche</a><a
+                        href="#repères">Mentions légales</a><a href="#repères">Contact</a></nav>
+            </div>
+            <p class="footer-note">Les contenus de MedPlant ont une visée informative et ne constituent ni un diagnostic
+                ni une recommandation thérapeutique.</p>
+        </div>
+    </footer>
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <script>
+        const toast = document.getElementById('toast');
+        let toastTimer;
+        function showToast(message) {
+            toast.textContent = message;
+            toast.classList.add('show');
+            clearTimeout(toastTimer);
+            toastTimer = setTimeout(() => toast.classList.remove('show'), 3200);
+        }
+
+        const filterButtons = [...document.querySelectorAll('.filter-chip')];
+        const articleCards = [...document.querySelectorAll('.article-card')];
+        let activeFilter = 'all';
+        let searchTerm = '';
+
+        const articleDetails = {
+            camomille: {
+                category: 'Fiche botanique', readingTime: '6 min de lecture',
+                title: 'La camomille matricaire : apprendre à la reconnaître',
+                intro: 'Une fleur familière, souvent confondue avec d’autres marguerites. Quelques repères botaniques aident à l’observer sans lui prêter de propriétés non vérifiées.',
+                image: 'https://images.unsplash.com/photo-1563241527-3004b7be0ffd?auto=format&fit=crop&w=1200&q=85',
+                alt: 'Fleurs blanches de camomille sur tige',
+                evidence: 'Usages traditionnels rapportés. Toute affirmation d’efficacité doit être reliée à des références précises et évaluée selon les données disponibles.',
+                sections: [
+                    ['Une plante à observer', 'La camomille matricaire (Matricaria chamomilla) est une plante annuelle de la famille des Astéracées. Pour l’identifier, on observe notamment ses capitules, ses feuilles finement découpées et le réceptacle floral. La détermination botanique ne doit pas reposer sur une seule caractéristique.'],
+                    ['Usages et traditions', 'Les fleurs sont traditionnellement utilisées de différentes façons, notamment en infusion. Les pratiques varient selon les régions et les préparations; un usage traditionnel ne suffit pas à démontrer un effet thérapeutique.'],
+                    ['Précautions et limites', 'Une possible sensibilité aux plantes de la famille des Astéracées doit être prise en compte. En cas de traitement, de grossesse, d’allaitement ou de doute, demandez conseil à un professionnel de santé. Ne cueillez pas une plante que vous n’avez pas identifiée avec certitude.']
+                ]
+            },
+            science: {
+                category: 'Décryptage', readingTime: '8 min de lecture',
+                title: 'Plantes et science : lire le niveau de preuve',
+                intro: 'Une étude isolée ne permet pas toujours de tirer une conclusion générale. Voici des repères pour distinguer les types de données et leurs limites.',
+                image: 'https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?auto=format&fit=crop&w=1200&q=85',
+                alt: 'Feuilles vertes baignées de lumière',
+                evidence: 'Article de méthode. Le niveau de preuve dépend de la question étudiée, de la qualité des études et de la cohérence des résultats.',
+                sections: [
+                    ['Une question précise d’abord', 'Avant d’interpréter une étude, identifiez ce qui est mesuré, chez qui, avec quelle préparation et dans quelles conditions. Des résultats portant sur un extrait standardisé ne s’appliquent pas automatiquement à une tisane ou à une autre préparation.'],
+                    ['Des données de nature différente', 'Les usages traditionnels, les études en laboratoire, les études chez l’animal et les essais cliniques n’apportent pas le même type d’information. Ils peuvent contribuer à la recherche, mais ne répondent pas tous aux mêmes questions.'],
+                    ['Précautions et limites', 'Regardez la taille de l’étude, sa méthode, ses limites et la possibilité de reproduire les résultats. Évitez les promesses absolues : l’absence de preuve suffisante ne prouve ni l’efficacité ni l’inefficacité.']
+                ]
+            },
+            infusion: {
+                category: 'Gestes & savoirs', readingTime: '5 min de lecture',
+                title: 'Infusion, décoction : quelle différence ?',
+                intro: 'Ces mots désignent des méthodes de préparation différentes. Le choix dépend de la plante et de la partie utilisée, et ne constitue pas en soi une recommandation de traitement.',
+                image: 'https://images.unsplash.com/photo-1544787219-7f47ccb76574?auto=format&fit=crop&w=1200&q=85',
+                alt: 'Tasse de tisane chaude sur une table',
+                evidence: 'Pratiques traditionnelles. Les méthodes et durées varient selon les plantes; se référer à des sources fiables pour chaque espèce.',
+                sections: [
+                    ['L’infusion en bref', 'Dans une infusion, on verse généralement de l’eau chaude sur la partie végétale, puis on laisse reposer avant de filtrer. Cette méthode est souvent associée aux parties tendres, mais les pratiques dépendent de la plante concernée.'],
+                    ['La décoction en bref', 'La décoction consiste traditionnellement à maintenir certaines parties végétales dans l’eau chauffée pendant une durée déterminée. Elle est parfois utilisée pour des parties plus fermes. Il n’existe pas de durée ou de quantité universelle applicable à toutes les plantes.'],
+                    ['Précautions et limites', 'La préparation ne neutralise pas nécessairement les risques ou les interactions. N’improvisez pas de dosage à visée thérapeutique; vérifiez les recommandations propres à la plante auprès d’une source qualifiée et demandez conseil en cas de doute.']
+                ]
+            },
+            precautions: {
+                category: 'Précautions', readingTime: '7 min de lecture',
+                title: 'Plantes médicinales : les précautions à connaître',
+                intro: 'Naturel ne signifie pas sans risque. Quelques réflexes permettent d’aborder les plantes avec prudence, en particulier en cas de traitement ou de situation de santé particulière.',
+                image: 'https://images.unsplash.com/photo-1512290923902-8a9f81dc236c?auto=format&fit=crop&w=1200&q=85',
+                alt: 'Plantes séchées préparées avec soin',
+                evidence: 'Repères généraux de prudence. Les risques et interactions sont propres à chaque plante, préparation et personne.',
+                sections: [
+                    ['Toujours identifier la plante', 'Le nom commun peut désigner plusieurs espèces. Vérifiez le nom botanique, la partie utilisée et la forme du produit. Une identification incertaine ou une récolte mal maîtrisée peut exposer à des confusions.'],
+                    ['Penser aux interactions', 'Certaines plantes ou préparations peuvent interagir avec des médicaments ou ne pas convenir à certaines personnes. Signalez toujours leur usage à votre médecin ou pharmacien, particulièrement avant une intervention ou en cas de traitement régulier.'],
+                    ['Précautions et limites', 'La grossesse, l’allaitement, l’enfance et certaines maladies peuvent nécessiter une vigilance particulière. N’interrompez et ne modifiez jamais un traitement prescrit sur la base d’un article ou d’un conseil en ligne.']
+                ]
+            }
+        };
+
+        function showArticle(articleId) {
+            const article = articleDetails[articleId];
+            if (!article) return;
+            document.getElementById('homeView').hidden = true;
+            document.getElementById('articleDetail').hidden = false;
+            document.getElementById('detailImage').src = article.image;
+            document.getElementById('detailImage').alt = article.alt;
+            document.getElementById('detailCategory').textContent = article.category;
+            document.getElementById('detailReadingTime').textContent = article.readingTime;
+            document.getElementById('detailTitle').textContent = article.title;
+            document.getElementById('articleBreadcrumbTitle').textContent = article.title;
+            document.getElementById('detailIntro').textContent = article.intro;
+            document.getElementById('detailEvidence').textContent = article.evidence;
+            document.getElementById('detailContent').innerHTML = article.sections.map(([heading, content], index) => `
+                <section id="detail-section-${index + 1}">
+                    <h2>${heading}</h2>
+                    <p>${content}</p>
+                </section>
+            `).join('');
+            document.title = `${article.title} — MedPlant`;
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function showHome(scrollToArticles = false) {
+            document.getElementById('articleDetail').hidden = true;
+            document.getElementById('homeView').hidden = false;
+            document.title = 'MedPlant — Le monde végétal, mieux compris';
+            if (scrollToArticles) document.getElementById('articles').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function renderRoute() {
+            const match = window.location.hash.match(/^#article\/([a-z-]+)$/);
+            if (match && articleDetails[match[1]]) showArticle(match[1]);
+            else showHome(false);
+        }
+
+        document.querySelectorAll('[data-article-id]').forEach((link) => link.addEventListener('click', (event) => {
+            event.preventDefault();
+            const articleId = link.dataset.articleId;
+            history.pushState({ articleId }, '', `#article/${articleId}`);
+            showArticle(articleId);
+        }));
+
+        document.getElementById('backToArticles').addEventListener('click', () => {
+            history.replaceState({}, '', '#articles');
+            showHome(true);
+        });
+
+        document.getElementById('homeBreadcrumb').addEventListener('click', (event) => {
+            event.preventDefault();
+            history.replaceState({}, '', '#accueil');
+            showHome(false);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        document.getElementById('articlesBreadcrumb').addEventListener('click', (event) => {
+            event.preventDefault();
+            history.replaceState({}, '', '#articles');
+            showHome(true);
+        });
+
+        window.addEventListener('popstate', renderRoute);
+        renderRoute();
+
+        function updateArticles() {
+            let visibleCount = 0;
+            articleCards.forEach((card) => {
+                const matchesFilter = activeFilter === 'all' || card.dataset.category === activeFilter;
+                const searchable = `${card.dataset.search} ${card.textContent}`.toLocaleLowerCase('fr');
+                const matchesSearch = !searchTerm || searchable.includes(searchTerm.toLocaleLowerCase('fr'));
+                card.hidden = !(matchesFilter && matchesSearch);
+                if (!card.hidden) visibleCount += 1;
+            });
+            const oldMessage = document.querySelector('.no-results');
+            if (oldMessage) oldMessage.remove();
+            if (!visibleCount) {
+                const message = document.createElement('p');
+                message.className = 'no-results';
+                message.textContent = 'Aucun article ne correspond à cette recherche. Essayez un autre terme.';
+                document.getElementById('articleList').append(message);
+            }
+        }
+
+        filterButtons.forEach((button) => button.addEventListener('click', () => {
+            activeFilter = button.dataset.filter;
+            filterButtons.forEach((item) => item.setAttribute('aria-pressed', String(item === button)));
+            updateArticles();
+        }));
+
+        const searchInputs = [document.getElementById('heroSearchInput'), document.getElementById('navSearchInput')];
+        searchInputs.forEach((input) => input.addEventListener('input', () => {
+            searchTerm = input.value.trim();
+            searchInputs.forEach((other) => { if (other !== input) other.value = input.value; });
+            updateArticles();
+        }));
+
+        document.getElementById('heroSearchForm').addEventListener('submit', (event) => {
+            event.preventDefault();
+            document.getElementById('articles').scrollIntoView({ behavior: 'smooth' });
+        });
+
+        document.getElementById('navSearch').addEventListener('click', (event) => {
+            if (window.matchMedia('(max-width: 680px)').matches && !event.target.closest('input')) {
+                event.currentTarget.classList.toggle('open');
+                if (event.currentTarget.classList.contains('open')) document.getElementById('navSearchInput').focus();
+            }
+        });
+
+        const menuToggle = document.getElementById('menuToggle');
+        menuToggle.addEventListener('click', () => {
+            const nav = document.getElementById('mainNav');
+            const isOpen = nav.classList.toggle('open');
+            menuToggle.setAttribute('aria-expanded', String(isOpen));
+            menuToggle.setAttribute('aria-label', isOpen ? 'Fermer le menu' : 'Ouvrir le menu');
+        });
+        document.querySelectorAll('#mainNav a').forEach((link) => link.addEventListener('click', () => {
+            document.getElementById('mainNav').classList.remove('open');
+            menuToggle.setAttribute('aria-expanded', 'false');
+        }));
+
+        document.querySelectorAll('[data-toast]:not([data-article-id])').forEach((link) => link.addEventListener('click', (event) => {
+            event.preventDefault();
+            showToast(link.dataset.toast);
+        }));
+
+        document.getElementById('newsletterForm').addEventListener('submit', (event) => {
+            event.preventDefault();
+            showToast('Merci pour votre intérêt ! L’inscription sera disponible avec la prochaine version.');
+            event.currentTarget.reset();
+        });
+    </script>
+</body>
+
+</html>
